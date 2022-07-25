@@ -7,7 +7,7 @@ import {
 const initialState = {
   toolbar: true,
   sidebar: true,
-  framebar: true
+  framebar: false
 };
 
 function panels (state = initialState, action) {

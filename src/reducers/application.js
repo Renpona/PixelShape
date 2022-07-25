@@ -24,8 +24,8 @@ const defaultConsts = {
 const initialState = {
   projectGuid: uuid(),
   size: {
-    width: 32,
-    height: 32
+    width: 40,
+    height: 40
   },
   pixelSize: 20,
   optimalPixelSize: 20,
@@ -34,14 +34,14 @@ const initialState = {
     height: 2000
   },
   resetPalette: false,
-  grid: false,
+  grid: true,
   stretch: false,
   anchor: 'oo',
   downloadOptions: {
-    includeGif: true,
-    includeSpritesheet: true,
+    includeGif: false,
+    includeSpritesheet: false,
     includeProject: true,
-    includePalette: true
+    includePalette: false
   }
 };
 
