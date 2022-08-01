@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const config = {
   entry: [
+    '@babel/polyfill',
     './src/polyfills/index.js',
     './src/index.js',
   ],
@@ -31,14 +32,6 @@ const config = {
   debug: true,
   devtool: 'eval-source-map',
   module: {
-    preLoaders: [
-      {
-        test: /\.js$/,
-        loader: 'eslint',
-        include: path.join(__dirname, 'src'),
-        exclude: path.join(__dirname, 'src/libs')
-      }
-    ],
     loaders: [
       {
         test: /\.styl$/,
