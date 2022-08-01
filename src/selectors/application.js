@@ -71,3 +71,7 @@ export function getProjectDownloadOption (state) {
 export function getPaletteDownloadOption (state) {
   return getApplication(state).downloadOptions.includePalette;
 }
+
+export function getVtsState (state) {
+  return getApplication(state).downloadOptions.vtsState;
+}

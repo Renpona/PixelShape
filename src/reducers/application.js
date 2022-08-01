@@ -8,7 +8,8 @@ import {
   TOGGLE_INCLUDE_GIF,
   TOGGLE_INCLUDE_SPRITESHEET,
   TOGGLE_INCLUDE_PROJECT,
-  TOGGLE_INCLUDE_PALETTE
+  TOGGLE_INCLUDE_PALETTE,
+  VTS
 } from '../actions/application';
 
 import { uuid } from '../utils/uuid';
@@ -41,7 +42,8 @@ const initialState = {
     includeGif: false,
     includeSpritesheet: false,
     includeProject: true,
-    includePalette: false
+    includePalette: false,
+    vtsState: null
   }
 };
 
@@ -112,6 +114,9 @@ function application (state = initialState, action) {
       return { ...state, downloadOptions };
     case TOGGLE_INCLUDE_PROJECT:
       downloadOptions = { ...state.downloadOptions, includeProject: !state.downloadOptions.includeProject };
+      return { ...state, downloadOptions };
+    case VTS:
+      downloadOptions = { ...state.downloadOptions, vtsState: action.vtsPlugin };
       return { ...state, downloadOptions };
     default:
       return state;

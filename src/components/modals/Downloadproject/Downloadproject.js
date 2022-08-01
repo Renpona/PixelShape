@@ -10,10 +10,21 @@ import StateLoader from '../../../statemanager/StateLoader';
 import { Files } from '../../../defaults/constants';
 
 import generatePalette from '../../../htmlgenerators/paletteGenerator';
+import { VtsPlugin } from '../../../vtubestudio/vtsInit';
+import { test2 } from '../../../vtubestudio/test';
 
 class DownloadProjectModal extends Component {
   constructor (props) {
     super(props);
+  }
+
+  componentDidMount () {
+    //this.vtsInstance = VtsPlugin.init();
+    let vts = new VtsPlugin();
+    vts.webSocket.addEventListener("open", () => {
+      this.vtsLocalInstance = vts;
+      console.log("Connected");
+    });
   }
 
   combineGifData () {
@@ -57,6 +68,16 @@ class DownloadProjectModal extends Component {
       ),
       Files.NAME.PALETTE
     );
+  }
+
+  vtsConnect () {
+    //let vtsInstance = new VtsPlugin();
+    //this.props.vts = vtsInstance.plugin;
+    this.props.vtsDispatch(this.vtsLocalInstance);
+  }
+
+  vtsTest () {
+    test2(this.props.vtsState.plugin);
   }
 
   confirm () {
@@ -104,7 +125,8 @@ class DownloadProjectModal extends Component {
           onChange={this.props.toggleIncludeProject.bind(this)}>
           Include project
         </ToggleCheckbox>
-
+        <button onClick={this.vtsConnect.bind(this)}>Connect VTubeStudio</button>
+        <button onClick={this.vtsTest.bind(this)}>Check VTubeStudio</button>
       </ModalWindow>
     );
   }

@@ -11,6 +11,8 @@ export const TOGGLE_INCLUDE_SPRITESHEET = 'APP:TOGGLE_INCLUDE_SPRITESHEET';
 export const TOGGLE_INCLUDE_PROJECT = 'APP:TOGGLE_INCLUDE_PROJECT';
 export const TOGGLE_INCLUDE_PALETTE = 'APP:TOGGLE_INCLUDE_PALETTE';
 
+export const VTS = 'APP:VTS';
+
 // anchor and stretch will be only used in frames reducer
 // application reducer needs to know only about width and height
 export const updateSize = (width, height, anchor, stretch) => ({
@@ -58,6 +60,11 @@ export const toggleIncludeProject = () => ({
 
 export const toggleIncludePalette = () => ({
   type: TOGGLE_INCLUDE_PALETTE
+});
+
+export const vtsAction = vtsPlugin => ({
+  type: VTS,
+  vtsPlugin
 });
 
 export const processSizeChange = (width, height, stretch) => (dispatch, getState) => {
