@@ -5,6 +5,7 @@ import { getApplication } from '../selectors/application';
 import { getFrames } from '../selectors/frames';
 
 import ImageDataCompressor from './ImageDataCompressor';
+import { VtsPlugin } from '../vtubestudio/vtsInit';
 
 export class StateConverter {
   static hydrateOnImport (fromObj, toObj, schemaType) {
@@ -46,6 +47,8 @@ export class StateConverter {
     frames = converted.app.frames;
     size = converted.app.size;
 
+    this.convertFrameDataToPixelData(frames.frame_0.naturalImageData.data);
+
     Object.keys(frames)
       .forEach(frameId => {
         frames[frameId].naturalImageData.data = ImageDataCompressor.compress(
@@ -56,6 +59,36 @@ export class StateConverter {
       });
 
     return converted;
+  }
+
+  static convertFrameDataToPixelData (frameData) {
+    let vts = new VtsPlugin();
+    var pixelData = [];
+    var pixel = [];
+    const dataSize = Object.keys(frameData);
+    for (let index = 0; index < dataSize.length; index++) {
+      const item = frameData[index];
+      pixel.push(item);
+      if (pixel.length >= 4) {
+        pixelData.push(this.convertPixelToData(pixel));
+        pixel = [];
+      }
+    }
+    console.log(pixelData);
+
+    for (let index = 0; index < pixelData.length; index++) {
+      const item = pixelData[index];
+      vts.processPixelData(item, index);
+    }
+  }
+
+  static convertPixelToData (pixel) {
+    return {
+      'colorR': pixel[0],
+      'colorG': pixel[1],
+      'colorB': pixel[2],
+      'colorA': pixel[3]
+    };
   }
 
   static convertToImport (stateObj) {

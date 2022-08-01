@@ -23,6 +23,20 @@ export class VtsPlugin {
         this.plugin = plugin;
     }
 
+    processPixelData (pixel, index) {
+        let targetArtMesh = ScreenInterface.findArtMesh(index);
+        let artMeshName = { 'nameExact': targetArtMesh };
+
+        let requestData = {
+            'data': {
+                'colorTint': pixel,
+                'artMeshMatcher': artMeshName
+            }
+        };
+
+        this.plugin.apiClient.colorTint(requestData);
+    }
+
     static init () {
         let instance = new VtsPlugin();
         return instance.plugin;
