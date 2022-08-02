@@ -26,7 +26,7 @@ export class StateConverter {
       });
   }
 
-  static convertToExport (stateData) {
+  static convertToExport (stateData, compress = true) {
     const stateClone = JSON.parse(JSON.stringify(stateData)),
           converted = { meta: {}, app: {} };
 
@@ -47,9 +47,8 @@ export class StateConverter {
     frames = converted.app.frames;
     size = converted.app.size;
 
-    this.convertFrameDataToPixelData(frames.frame_0.naturalImageData.data);
-
-    Object.keys(frames)
+    if (compress) {
+      Object.keys(frames)
       .forEach(frameId => {
         frames[frameId].naturalImageData.data = ImageDataCompressor.compress(
           frames[frameId].naturalImageData,
@@ -57,12 +56,12 @@ export class StateConverter {
           size.height
         );
       });
+    }
 
     return converted;
   }
 
-  static convertFrameDataToPixelData (frameData) {
-    let vts = new VtsPlugin();
+  static convertFrameDataToPixelData (vtsInstance, frameData) {
     var pixelData = [];
     var pixel = [];
     const dataSize = Object.keys(frameData);
@@ -78,7 +77,7 @@ export class StateConverter {
 
     for (let index = 0; index < pixelData.length; index++) {
       const item = pixelData[index];
-      vts.processPixelData(item, index);
+      vtsInstance.processPixelData(item, index);
     }
   }
 

@@ -4,8 +4,8 @@ import { StateConverter } from './StateConverter';
 import GifLoader from '../libs/GifLoader';
 
 class StateLoader {
-  serializeForDownload (state) {
-    return StateConverter.convertToExport(state);
+  serializeForDownload (state, compress = true) {
+    return StateConverter.convertToExport(state, compress);
   }
 
   prepareForDownload (state, fileName) {
@@ -18,6 +18,12 @@ class StateLoader {
     const subState = StateConverter.convertToImport(data.json);
 
     return Promise.resolve({ file: data.file, json: subState });
+  }
+
+  prepareForVts (vtsInstance, state) {
+    let serializedData = this.serializeForDownload(state, false).app.frames;
+    let imageData = serializedData.frame_0.naturalImageData.data;
+    StateConverter.convertFrameDataToPixelData(vtsInstance, imageData);
   }
 
   // calls calback with { file, json }

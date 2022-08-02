@@ -80,6 +80,11 @@ class DownloadProjectModal extends Component {
     test2(this.props.vtsState.plugin);
   }
 
+  sendToVts () {
+    const state = this.props.getProjectState();
+    return StateLoader.prepareForVts(this.props.vtsState, state);
+  }
+
   confirm () {
     const blobs = [];
 
@@ -127,6 +132,7 @@ class DownloadProjectModal extends Component {
         </ToggleCheckbox>
         <button onClick={this.vtsConnect.bind(this)}>Connect VTubeStudio</button>
         <button onClick={this.vtsTest.bind(this)}>Check VTubeStudio</button>
+        <button onClick={this.sendToVts.bind(this)}>Send To VTubeStudio</button>
       </ModalWindow>
     );
   }

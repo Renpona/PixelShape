@@ -4,7 +4,7 @@ export class ScreenInterface {
         let row = Math.ceil(index / 40);
         let column = index - (40 * (row - 1));
 
-        let artMesh = `${column}x${row}`;
+        let artMesh = `A${column}x${row}`;
         return artMesh;
     }
 }

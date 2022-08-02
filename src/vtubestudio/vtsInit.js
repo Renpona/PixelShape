@@ -25,13 +25,11 @@ export class VtsPlugin {
 
     processPixelData (pixel, index) {
         let targetArtMesh = ScreenInterface.findArtMesh(index);
-        let artMeshName = { 'nameExact': targetArtMesh };
+        let artMeshName = { 'nameExact': [ targetArtMesh ] };
 
         let requestData = {
-            'data': {
-                'colorTint': pixel,
-                'artMeshMatcher': artMeshName
-            }
+            'colorTint': pixel,
+            'artMeshMatcher': artMeshName
         };
 
         this.plugin.apiClient.colorTint(requestData);
