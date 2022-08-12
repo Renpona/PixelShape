@@ -5,9 +5,11 @@ import { getApplication } from '../selectors/application';
 import { getFrames } from '../selectors/frames';
 
 import ImageDataCompressor from './ImageDataCompressor';
-import { VtsPlugin } from '../vtubestudio/vtsInit';
+import { ScreenInterface } from '../vtubestudio/screenInterface';
 
 export class StateConverter {
+  static vtsInstance;
+
   static hydrateOnImport (fromObj, toObj, schemaType) {
     Object.keys(schemaType)
       .forEach(path => {
@@ -61,24 +63,63 @@ export class StateConverter {
     return converted;
   }
 
-  static convertFrameDataToPixelData (vtsInstance, frameData) {
+  static convertFrameDataToPixelData (frameData, sendPixels = false) {
     var pixelData = [];
     var pixel = [];
     const dataSize = Object.keys(frameData);
+
+    // the raw image data stores a single pixel as four array items (R, G, B, and A), so combine them into a single object for each pixel
     for (let index = 0; index < dataSize.length; index++) {
       const item = frameData[index];
       pixel.push(item);
       if (pixel.length >= 4) {
-        pixelData.push(this.convertPixelToData(pixel));
+        let processedPixel = this.convertPixelToData(pixel);
+        
+        // calculate the coordinates (and therefore Artmesh ID) of a pixel based on its position in the array, and save it to the pixel object
+        // once the Artmesh ID has been calculated, we no longer need to conserve the original position of the pixel in the array
+        processedPixel.artMesh = ScreenInterface.findArtMesh(pixelData.length);
+
+        pixelData.push(processedPixel);
         pixel = [];
       }
     }
-    console.log(pixelData);
 
+    // debug logic, allow the prototype behavior of sending every pixel one at a time
+    if (sendPixels) {
+      for (let index = 0; index < pixelData.length; index++) {
+        const item = pixelData[index];
+        this.vtsInstance.processPixelData(item, index);
+      }
+    }
+
+    return pixelData;
+  }
+
+  static sendPixelDataByColor(pixelData) {
+    let colorOrganizer = {};
+    // iterate through our new pixel array to prep the data for sending to VTS
     for (let index = 0; index < pixelData.length; index++) {
       const item = pixelData[index];
-      vtsInstance.processPixelData(item, index);
+
+      // calculate the coordinates (and therefore Artmesh ID) of a pixel based on its position in the array, and save it to the pixel object
+      //item.artMesh = ScreenInterface.findArtMesh(index);
+
+      // separate the pixels by color, since all pixels of the same color can be sent in a single request
+      let colorValue = this.encodeRgb(item);
+      if (colorOrganizer[colorValue]) {
+        colorOrganizer[colorValue].pixels.push(item.artMesh);
+      } else {
+        colorOrganizer[colorValue] = {
+          "pixels": [ item.artMesh ],
+          "color": item
+        }
+        //colorOrganizer[colorValue].pixels = [ item.artMesh ];
+        //colorOrganizer[colorValue].color = item;
+      }
     }
+
+    let colorList = Object.keys(colorOrganizer);
+    colorList.forEach(color => this.vtsInstance.processColorData(colorOrganizer[color]));
   }
 
   static convertPixelToData (pixel) {
@@ -88,6 +129,10 @@ export class StateConverter {
       'colorB': pixel[2],
       'colorA': pixel[3]
     };
+  }
+
+  static encodeRgb (pixel) {
+    return `R${pixel.colorR}G${pixel.colorG}B${pixel.colorB}A${pixel.colorA}`;
   }
 
   static convertToImport (stateObj) {

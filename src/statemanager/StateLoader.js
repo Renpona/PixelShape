@@ -23,7 +23,10 @@ class StateLoader {
   prepareForVts (vtsInstance, state) {
     let serializedData = this.serializeForDownload(state, false).app.frames;
     let imageData = serializedData.frame_0.naturalImageData.data;
-    StateConverter.convertFrameDataToPixelData(vtsInstance, imageData);
+    StateConverter.vtsInstance = vtsInstance;
+    let pixelData = StateConverter.convertFrameDataToPixelData(imageData);
+    StateConverter.sendPixelDataByColor(pixelData);
+    return imageData;
   }
 
   // calls calback with { file, json }

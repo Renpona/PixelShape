@@ -18,15 +18,6 @@ class DownloadProjectModal extends Component {
     super(props);
   }
 
-  componentDidMount () {
-    //this.vtsInstance = VtsPlugin.init();
-    let vts = new VtsPlugin();
-    vts.webSocket.addEventListener("open", () => {
-      this.vtsLocalInstance = vts;
-      console.log("Connected");
-    });
-  }
-
   combineGifData () {
     return this.props.framesOrder.map(
       el => this.props.gifFramesData[el]
@@ -73,7 +64,13 @@ class DownloadProjectModal extends Component {
   vtsConnect () {
     //let vtsInstance = new VtsPlugin();
     //this.props.vts = vtsInstance.plugin;
-    this.props.vtsDispatch(this.vtsLocalInstance);
+    let vts = new VtsPlugin();
+    vts.webSocket.addEventListener("open", () => {
+      this.vtsLocalInstance = vts;
+      console.log("Connected");
+      this.props.vtsDispatch(this.vtsLocalInstance);
+      this.vtsTest();
+    });
   }
 
   vtsTest () {
@@ -82,7 +79,8 @@ class DownloadProjectModal extends Component {
 
   sendToVts () {
     const state = this.props.getProjectState();
-    return StateLoader.prepareForVts(this.props.vtsState, state);
+    StateLoader.prepareForVts(this.props.vtsState, state);
+    //TODO: prepareForVts now returns the raw image data - save it to use for diffing
   }
 
   confirm () {
@@ -131,7 +129,6 @@ class DownloadProjectModal extends Component {
           Include project
         </ToggleCheckbox>
         <button onClick={this.vtsConnect.bind(this)}>Connect VTubeStudio</button>
-        <button onClick={this.vtsTest.bind(this)}>Check VTubeStudio</button>
         <button onClick={this.sendToVts.bind(this)}>Send To VTubeStudio</button>
       </ModalWindow>
     );

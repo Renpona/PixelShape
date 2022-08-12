@@ -3,7 +3,6 @@ import { ApiClient } from 'vtubestudio';
 
 import { Plugin } from 'vtubestudio';
 import { ScreenInterface } from './screenInterface';
-import { test, test2 } from './test';
 
 export class VtsPlugin {
     webSocket;
@@ -23,13 +22,28 @@ export class VtsPlugin {
         this.plugin = plugin;
     }
 
-    processPixelData (pixel, index) {
-        let targetArtMesh = ScreenInterface.findArtMesh(index);
+    // read data for a single pixel and send it to VTS
+    processPixelData (pixel) {
+        let targetArtMesh = pixel.artMesh;
         let artMeshName = { 'nameExact': [ targetArtMesh ] };
 
         let requestData = {
             'colorTint': pixel,
             'artMeshMatcher': artMeshName
+        };
+
+        this.plugin.apiClient.colorTint(requestData);
+    }
+
+    // read an array of all pixels sharing a color, process it into a single request, and send it to VTS
+    processColorData (colorGroup) {
+        let artMeshList = [];
+        colorGroup.pixels.forEach(pixel => artMeshList.push(pixel));
+        let artMeshMatcher = { 'nameExact': artMeshList };
+
+        let requestData = {
+            'colorTint': colorGroup.color,
+            'artMeshMatcher': artMeshMatcher
         };
 
         this.plugin.apiClient.colorTint(requestData);
