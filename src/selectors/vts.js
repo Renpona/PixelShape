@@ -1,3 +1,3 @@
 export function getVtsState (state) {
-    return state.vtsState;
+    return state.vts;
 }

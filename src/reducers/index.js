@@ -52,7 +52,7 @@ const appReducer = combineReducers({
     // is fired as the very first action, so do not track initial state before it is fired
     ignoreInitialState: true
   }),
-  vtsState: vts
+  vts: vts
 });
 
 const rootReducer = (state, action) => {

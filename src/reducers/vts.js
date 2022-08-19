@@ -1,13 +1,13 @@
 import { VTS } from '../actions/vts';
 
 const initialState = {
-    vtsState: null
+    instance: null
 };
 
 function vts (state = initialState, action) {
     switch (action.type) {
         case VTS:
-            return { ...state, vtsState: action.vtsPlugin };
+            return { ...state, instance: action.vtsPlugin };
         default:
             return state;
     }

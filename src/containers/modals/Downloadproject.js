@@ -33,7 +33,7 @@ const mapStateToProps = state => ({
   includeGif: getGifDownloadOption(state),
   includeProject: getProjectDownloadOption(state),
   includePalette: getPaletteDownloadOption(state),
-  vtsState: getVtsState(state)
+  vts: getVtsState(state)
 });
 
 const mapDispatchToProps = dispatch => ({
