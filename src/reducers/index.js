@@ -28,6 +28,7 @@ import userPalette from './palette';
 import frames from './frames';
 import panels from './panels';
 import application from './application';
+import vts from './vts';
 
 const appReducer = combineReducers({
   tools,
@@ -50,7 +51,8 @@ const appReducer = combineReducers({
     // IMPORTANT NOTE: this was done with consideration that SET_SURFACE_CONSTRAINTS
     // is fired as the very first action, so do not track initial state before it is fired
     ignoreInitialState: true
-  })
+  }),
+  vtsState: vts
 });
 
 const rootReducer = (state, action) => {

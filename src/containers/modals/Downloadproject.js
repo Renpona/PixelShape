@@ -16,9 +16,12 @@ import {
   toggleIncludeGif,
   toggleIncludeSpritesheet,
   toggleIncludeProject,
-  toggleIncludePalette,
-  vtsAction
+  toggleIncludePalette
 } from '../../actions/application';
+
+import {
+  vtsAction
+} from '../../actions/vts';
 
 import DownloadProjectModal from '../../components/modals/Downloadproject/Downloadproject';
 
