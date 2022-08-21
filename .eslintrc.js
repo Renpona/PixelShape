@@ -1,6 +1,6 @@
 module.exports = {
   "parserOptions": {
-    "ecmaVersion": 6,
+    "ecmaVersion": 8,
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true,
@@ -22,7 +22,7 @@ module.exports = {
   "rules": {
     "quotes": [2, "single"],
     "strict": [2, "never"],
-    "indent": [2, 2, {
+    "indent": [1, 2, {
       "SwitchCase": 1,
       "VariableDeclarator": { "var": 2, "let": 2, "const": 3 }
     }],
@@ -81,8 +81,9 @@ module.exports = {
     "no-magic-numbers": [1, { "ignore": [0] }],
     "no-useless-constructor": 0,
     // "no-unused-vars": 0,
-    "no-case-declarations": 0
-
+    "no-case-declarations": 0,
+    "no-debugger": 1,
+    "no-alert": 1
   },
   "plugins": [
     "react"
