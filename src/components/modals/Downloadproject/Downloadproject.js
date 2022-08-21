@@ -64,7 +64,8 @@ class DownloadProjectModal extends Component {
   vtsConnect () {
     //let vtsInstance = new VtsPlugin();
     //this.props.vts = vtsInstance.plugin;
-    let vts = new VtsPlugin();
+    let port = document.getElementById("vtsPort").value;
+    let vts = new VtsPlugin(port);
     vts.webSocket.addEventListener("open", () => {
       this.vtsLocalInstance = vts;
       console.log("Connected");
@@ -129,6 +130,7 @@ class DownloadProjectModal extends Component {
           onChange={this.props.toggleIncludeProject.bind(this)}>
           Include project
         </ToggleCheckbox>
+        <label htmlFor='port'>VTubeStudio API Port: </label><input type="number" name="port" id="vtsPort" defaultValue="8001" /><br/>
         <button onClick={this.vtsConnect.bind(this)}>Connect VTubeStudio</button>
         <button onClick={this.sendToVts.bind(this)}>Send To VTubeStudio</button>
       </ModalWindow>

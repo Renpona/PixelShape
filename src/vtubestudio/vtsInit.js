@@ -8,12 +8,12 @@ export class VtsPlugin {
     webSocket;
     plugin;
 
-    constructor () {
-        let webSocket = new WebSocket('ws://localhost:8001');
+    constructor (port) {
+        let webSocket = new WebSocket(`ws://localhost:${port}`);
 
-        /*this.webSocket.addEventListener('open', (event) => {
-            console.log("Connected to VTubeStudio on port " + 8001);
-        });*/
+        webSocket.addEventListener('open', (event) => {
+            console.log("Connected to VTubeStudio on port " + port);
+        });
 
         const bus = new WebSocketBus(webSocket);
         const apiClient = new ApiClient(bus);
