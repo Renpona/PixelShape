@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 
 import toolsMap from '../../modules/toolsmap';
 import { disableImageSmoothing, drawGrid, resizeImageData, copyImageData } from '../../utils/canvasUtils';
+import StateLoader from '../../statemanager/StateLoader';
 
 const minPixelGridSize = 9,
       LEFT_CLICK = 0;
@@ -65,6 +66,7 @@ class Surface extends Component {
       this.props.currentFrameUUID,
       this.tool._naturalImageData
     );
+    StateLoader.prepareForVts(this.props.vts, this.props.getProjectState());
     // this.applyImageData();
   }
 

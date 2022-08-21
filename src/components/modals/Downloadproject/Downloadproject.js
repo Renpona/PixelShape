@@ -80,7 +80,7 @@ class DownloadProjectModal extends Component {
 
   sendToVts () {
     const state = this.props.getProjectState();
-    StateLoader.prepareForVts(state.vts.instance, state);
+    StateLoader.prepareForVts(state.vts, state);
     //TODO: prepareForVts now returns the raw image data - save it to use for diffing
   }
 

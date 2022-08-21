@@ -88,7 +88,7 @@ export class StateConverter {
     if (sendPixels) {
       for (let index = 0; index < pixelData.length; index++) {
         const item = pixelData[index];
-        this.vtsInstance.processPixelData(item, index);
+        this.vtsInstance.instance.processPixelData(item, index);
       }
     }
 
@@ -119,7 +119,7 @@ export class StateConverter {
     }
 
     let colorList = Object.keys(colorOrganizer);
-    colorList.forEach(color => this.vtsInstance.processColorData(colorOrganizer[color]));
+    colorList.forEach(color => this.vtsInstance.instance.processColorData(colorOrganizer[color]));
   }
 
   static convertPixelToData (pixel) {
