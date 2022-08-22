@@ -54,6 +54,10 @@ class Apptoolbox extends Component {
     });
   }
 
+  componentDidMount () {
+    this.openModal(MODALS.VtsController);
+  }
+
   setStateFlag (flag) {
     const newState = Object.assign({}, this.initialModalState);
 

@@ -2,19 +2,22 @@ import { WebSocketBus } from 'vtubestudio';
 import { ApiClient } from 'vtubestudio';
 
 import { Plugin } from 'vtubestudio';
-import { ScreenInterface } from './screenInterface';
 
 export class VtsPlugin {
     webSocket;
     plugin;
+    state;
 
     constructor (port) {
         let webSocket = new WebSocket(`ws://localhost:${port}`);
 
         webSocket.addEventListener('open', (event) => {
             console.log("Connected to VTubeStudio on port " + port);
+            this.state = true;
         });
-
+        webSocket.addEventListener('error', (event) => {
+            this.state = false;
+        });
         const bus = new WebSocketBus(webSocket);
         const apiClient = new ApiClient(bus);
         const plugin = new Plugin(apiClient, 'Plugin Name', 'Renpona');

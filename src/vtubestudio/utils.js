@@ -6,4 +6,5 @@ export async function test(apiClient) {
 export async function checkModel(plugin) {
     const stats = await plugin.currentModel();
     console.log("VTube Studio model:", stats);
+    return stats;
 }
