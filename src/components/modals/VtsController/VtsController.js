@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ModalWindow from '../../modalwindow/Modalwindow';
 import StateLoader from '../../../statemanager/StateLoader';
+import ToggleCheckbox from '../../togglecheckbox/Togglecheckbox';
 
 import { VtsPlugin } from '../../../vtubestudio/vtsInit';
 import { checkModel } from '../../../vtubestudio/utils';
@@ -44,9 +45,14 @@ class VtsControllerModal extends Component {
         ok={{ text: null, action: this.done.bind(this) }}
         cancel={{ text: 'Done', action: this.done.bind(this) }}
         isShown={this.props.isShown}>
+          <ToggleCheckbox
+          value={this.props.autoSend}
+          onChange={this.props.toggleAutoSend.bind(this)}>
+          Auto-send to VTubeStudio
+        </ToggleCheckbox>
           <label htmlFor='port'>VTubeStudio API Port: </label><input type="number" name="port" id="vtsPort" defaultValue="8001" /><br/>
           <button onClick={this.vtsConnect.bind(this)}>Connect VTubeStudio</button>
-          <button onClick={this.sendToVts.bind(this)}>Send To VTubeStudio</button>
+          <button onClick={this.sendToVts.bind(this)}>Send Image To VTubeStudio</button>
         </ModalWindow>
       );
     }

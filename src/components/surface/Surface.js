@@ -66,7 +66,10 @@ class Surface extends Component {
       this.props.currentFrameUUID,
       this.tool._naturalImageData
     );
-    StateLoader.prepareForVts(this.props.vts, this.props.getProjectState());
+    let state = this.props.getProjectState();
+    if (state.vts.autoSend) {
+      StateLoader.prepareForVts(this.props.vts, state);
+    }
     // this.applyImageData();
   }
 

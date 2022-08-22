@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 
 import {
+    getAutoSendState,
     getVtsState
   } from '../../selectors';
   
@@ -9,13 +10,15 @@ import {
   } from '../../actions/application';
   
   import {
-    vtsAction
+    vtsAction,
+    toggleAutoSend
   } from '../../actions/vts';
   
   import VtsControllerModal from '../../components/modals/VtsController/VtsController';
 
   const mapStateToProps = state => ({
-    vts: getVtsState(state)
+    vts: getVtsState(state),
+    autoSend: getAutoSendState(state)
   });
   
   const mapDispatchToProps = dispatch => ({
@@ -24,6 +27,9 @@ import {
       },
     vtsDispatch (instance) {
       return dispatch(vtsAction(instance));
+    },
+    toggleAutoSend () {
+      return dispatch(toggleAutoSend());
     }
   });
   
