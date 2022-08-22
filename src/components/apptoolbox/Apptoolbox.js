@@ -8,12 +8,14 @@ import AppToolButton from '../apptoolbutton/Apptoolbutton';
 import NewProjectModal from '../../containers/modals/Newproject';
 import DownloadProjectModal from '../../containers/modals/Downloadproject';
 import CustomizePanelsModal from '../../containers/modals/Customizepanels';
+import VtsControllerModal from '../../containers/modals/VtsController';
 import SettingsModal from '../../containers/modals/Settings';
 
 const MODALS = {
   NewProject: 'newProjectShow',
   DownloadProject: 'downloadProjectShow',
   CustomizePanels: 'customizePanelsShow',
+  VtsController: 'vtsControllerShow',
   Settings: 'settingsShow'
 };
 
@@ -25,6 +27,7 @@ class Apptoolbox extends Component {
       [MODALS.NewProject]: false,
       [MODALS.DownloadProject]: false,
       [MODALS.CustomizePanels]: false,
+      [MODALS.VtsController]: false,
       [MODALS.Settings]: false
     };
     this.state = Object.assign({}, this.initialModalState);
@@ -34,10 +37,12 @@ class Apptoolbox extends Component {
     this.openNewProject = this.openModal.bind(this, MODALS.NewProject);
     this.openDownloadProject = this.openModal.bind(this, MODALS.DownloadProject);
     this.openCustomizePanels = this.openModal.bind(this, MODALS.CustomizePanels);
+    this.openVtsController = this.openModal.bind(this, MODALS.VtsController);
     this.openSettings = this.openModal.bind(this, MODALS.Settings);
 
     this.closeModal = this.closeModal.bind(this);
 
+    //TODO: might be a bad idea to have key bindings. investigate!!!
     this.bindKeys({
       'ctrl + z': this.executeUndo,
       'ctrl + y': this.executeRedo,
@@ -110,6 +115,11 @@ class Apptoolbox extends Component {
             width="30" height="30" icon="panels"
             doAction={this.openCustomizePanels} />
           <AppToolButton
+            btnTooltip="VTubeStudio Controls"
+            btnShortcut=""
+            width="30" height="30" icon="vts"
+            doAction={this.openVtsController} />
+          <AppToolButton
             btnTooltip="Settings"
             btnShortcut="(ALT + S)"
             width="30" height="30" icon="settings"
@@ -119,7 +129,7 @@ class Apptoolbox extends Component {
         <div
           className="modalLayer"
           style={{
-            display: this.state.newProjectShow || this.state.downloadProjectShow || this.state.customizePanelsShow || this.state.settingsShow ? 'block' : 'none'
+            display: this.state.newProjectShow || this.state.downloadProjectShow || this.state.customizePanelsShow || this.state.vtsControllerShow || this.state.settingsShow ? 'block' : 'none'
           }}></div>
 
         <NewProjectModal
@@ -132,6 +142,10 @@ class Apptoolbox extends Component {
 
         <CustomizePanelsModal
           isShown={this.state.customizePanelsShow}
+          closeModal={this.closeModal} />
+
+        <VtsControllerModal
+          isShown={this.state.vtsControllerShow}
           closeModal={this.closeModal} />
 
         <SettingsModal

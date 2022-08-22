@@ -3,7 +3,7 @@ export async function test(apiClient) {
     console.log("VTube Studio version:", stats.vTubeStudioVersion);
 }
 
-export async function test2(plugin) {
+export async function checkModel(plugin) {
     const stats = await plugin.currentModel();
     console.log("VTube Studio model:", stats);
 }

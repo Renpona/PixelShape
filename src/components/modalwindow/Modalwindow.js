@@ -17,8 +17,8 @@ const ModalWindow = props => {
         {props.children}
       </section>
       <footer>
-        <button onClick={props.cancel.action}>{props.cancel.text}</button>
-        <button onClick={props.ok.action}>{props.ok.text}</button>
+        { props.cancel.text && <button onClick={props.cancel.action}>{props.cancel.text}</button>}
+        { props.ok.text && <button onClick={props.ok.action}>{props.ok.text}</button>}
       </footer>
     </div>
   );

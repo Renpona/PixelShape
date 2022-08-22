@@ -10,8 +10,6 @@ import StateLoader from '../../../statemanager/StateLoader';
 import { Files } from '../../../defaults/constants';
 
 import generatePalette from '../../../htmlgenerators/paletteGenerator';
-import { VtsPlugin } from '../../../vtubestudio/vtsInit';
-import { test2 } from '../../../vtubestudio/test';
 
 class DownloadProjectModal extends Component {
   constructor (props) {
@@ -61,30 +59,6 @@ class DownloadProjectModal extends Component {
     );
   }
 
-  vtsConnect () {
-    //let vtsInstance = new VtsPlugin();
-    //this.props.vts = vtsInstance.plugin;
-    let port = document.getElementById("vtsPort").value;
-    let vts = new VtsPlugin(port);
-    vts.webSocket.addEventListener("open", () => {
-      this.vtsLocalInstance = vts;
-      console.log("Connected");
-      this.props.vtsDispatch(this.vtsLocalInstance);
-      this.vtsTest();
-    });
-  }
-
-  vtsTest () {
-    let plugin = this.props.getProjectState().vts.instance.plugin;
-    test2(plugin);
-  }
-
-  sendToVts () {
-    const state = this.props.getProjectState();
-    StateLoader.prepareForVts(state.vts, state);
-    //TODO: prepareForVts now returns the raw image data - save it to use for diffing
-  }
-
   confirm () {
     const blobs = [];
 
@@ -130,9 +104,6 @@ class DownloadProjectModal extends Component {
           onChange={this.props.toggleIncludeProject.bind(this)}>
           Include project
         </ToggleCheckbox>
-        <label htmlFor='port'>VTubeStudio API Port: </label><input type="number" name="port" id="vtsPort" defaultValue="8001" /><br/>
-        <button onClick={this.vtsConnect.bind(this)}>Connect VTubeStudio</button>
-        <button onClick={this.sendToVts.bind(this)}>Send To VTubeStudio</button>
       </ModalWindow>
     );
   }

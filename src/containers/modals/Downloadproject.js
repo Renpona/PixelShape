@@ -7,8 +7,7 @@ import {
   getSpritesheetDownloadOption,
   getGifDownloadOption,
   getProjectDownloadOption,
-  getPaletteDownloadOption,
-  getVtsState,
+  getPaletteDownloadOption
 } from '../../selectors';
 
 import {
@@ -19,10 +18,6 @@ import {
   toggleIncludePalette
 } from '../../actions/application';
 
-import {
-  vtsAction
-} from '../../actions/vts';
-
 import DownloadProjectModal from '../../components/modals/Downloadproject/Downloadproject';
 
 const mapStateToProps = state => ({
@@ -32,8 +27,7 @@ const mapStateToProps = state => ({
   includeSpritesheet: getSpritesheetDownloadOption(state),
   includeGif: getGifDownloadOption(state),
   includeProject: getProjectDownloadOption(state),
-  includePalette: getPaletteDownloadOption(state),
-  vts: getVtsState(state)
+  includePalette: getPaletteDownloadOption(state)
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -51,9 +45,6 @@ const mapDispatchToProps = dispatch => ({
   },
   toggleIncludePalette () {
     return dispatch(toggleIncludePalette());
-  },
-  vtsDispatch (instance) {
-    return dispatch(vtsAction(instance));
   }
 });
 

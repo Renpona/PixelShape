@@ -1,0 +1,55 @@
+import React, { Component } from 'react';
+import ModalWindow from '../../modalwindow/Modalwindow';
+import StateLoader from '../../../statemanager/StateLoader';
+
+import { VtsPlugin } from '../../../vtubestudio/vtsInit';
+import { checkModel } from '../../../vtubestudio/utils';
+
+class VtsControllerModal extends Component {
+    constructor (props) {
+      super(props);
+    }
+
+    vtsConnect () {
+      //let vtsInstance = new VtsPlugin();
+      //this.props.vts = vtsInstance.plugin;
+      let port = document.getElementById("vtsPort").value;
+      let vts = new VtsPlugin(port);
+      vts.webSocket.addEventListener("open", () => {
+        this.vtsLocalInstance = vts;
+        console.log("Connected");
+        this.props.vtsDispatch(this.vtsLocalInstance);
+        this.vtsTest();
+      });
+    }
+  
+    vtsTest () {
+      let plugin = this.props.getProjectState().vts.instance.plugin;
+      checkModel(plugin);
+    }
+  
+    sendToVts () {
+      const state = this.props.getProjectState();
+      StateLoader.prepareForVts(state.vts, state);
+      //TODO: prepareForVts now returns the raw image data - save it to use for diffing
+    }
+
+    done () {
+      this.props.closeModal();
+    }
+
+    render () {
+      return (
+        <ModalWindow title="VTubeStudio Connection"
+        ok={{ text: null, action: this.done.bind(this) }}
+        cancel={{ text: 'Done', action: this.done.bind(this) }}
+        isShown={this.props.isShown}>
+          <label htmlFor='port'>VTubeStudio API Port: </label><input type="number" name="port" id="vtsPort" defaultValue="8001" /><br/>
+          <button onClick={this.vtsConnect.bind(this)}>Connect VTubeStudio</button>
+          <button onClick={this.sendToVts.bind(this)}>Send To VTubeStudio</button>
+        </ModalWindow>
+      );
+    }
+}
+
+export default VtsControllerModal;
