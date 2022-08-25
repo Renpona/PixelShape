@@ -18,11 +18,29 @@ export class VtsPlugin {
         webSocket.addEventListener('error', (event) => {
             this.state = false;
         });
+        //TODO: upgrade to current version of VTSJS, which deprecated the Plugin client in favor of an upgraded ApiClient
         const bus = new WebSocketBus(webSocket);
         const apiClient = new ApiClient(bus);
-        const plugin = new Plugin(apiClient, 'Plugin Name', 'Renpona');
+        const authToken = this.loadAuthToken();
+        const plugin = new Plugin(
+            apiClient,
+            "VTS Livedraw",
+            "Renpona",
+            undefined,
+            authToken,
+            (newToken) => this.saveAuthToken(newToken)
+        );
+
         this.webSocket = webSocket;
         this.plugin = plugin;
+    }
+
+    loadAuthToken() {
+        return window.localStorage.getItem("vtsToken");
+    }
+
+    saveAuthToken(token) {
+        window.localStorage.setItem("vtsToken", token);
     }
 
     // read data for a single pixel and send it to VTS
