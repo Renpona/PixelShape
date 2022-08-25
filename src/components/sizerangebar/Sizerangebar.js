@@ -45,10 +45,14 @@ class Sizerangebar extends Component {
           onChange={this.onChange.bind(this)}
           onMouseDown={this.onMouseDown.bind(this)}
           onMouseUp={this.onMouseUp.bind(this)} />
-        <div
-          className={classes}>
-          {this.props.currentSize}
-        </div>
+        <input
+          type="number"
+          min="1"
+          max="10"
+          className={classes}
+          value={this.props.currentSize}
+          onChange={this.onChange.bind(this)}>
+        </input>
       </div>
     );
   }
