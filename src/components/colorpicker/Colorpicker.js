@@ -3,7 +3,7 @@ import './colorpicker.styl';
 import React, { Component } from 'react';
 
 // TODO: move this to defaults file
-const defaultColor = '#b7b7b7';
+const defaultColor = '#ff0000';
 
 class Colorpicker extends Component {
   constructor (...args) {
@@ -56,13 +56,21 @@ class Colorpicker extends Component {
   render () {
     return (
       <div className="colorpicker">
-        <div className="colorbar__label">Hex</div>
+        <div className="colorbar__label"><strong>Add Custom Color</strong></div>
         <input
+          type="text"
           ref={inp => this._input = inp}
           value={this.state.currentColor}
           style={{borderColor: this.state.borderColor}}
           onChange={this.onChange.bind(this)}
           onBlur={this.onBlur.bind(this)} />
+        <input 
+          type="color"
+          ref={inp => this._input = inp}
+          value={this.state.currentColor}
+          onChange={this.onChange.bind(this)}
+          onBlur={this.onBlur.bind(this)} />
+        <p></p>
         <div
           className="colorpicker__add"
           onClick={this.onClick.bind(this)}>
