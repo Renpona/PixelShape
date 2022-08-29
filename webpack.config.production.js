@@ -7,6 +7,7 @@ const ExtractStyl = new ExtractTextPlugin('[name].css');
 
 const config = {
   entry: [
+    '@babel/polyfill',
     './src/polyfills/index.js',
     './src/index.js',
   ],

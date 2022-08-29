@@ -1,5 +1,5 @@
 {
-  "name": "pixelshape",
+  "name": "pixelshapevts",
   "version": "0.0.2",
   "description": "Pixel editor that comes in handy when creating pixel art images and animations",
   "main": "index.js",
@@ -19,12 +19,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Convicted202/PixelShape.git"
+    "url": "git+https://github.com/Renpona/PixelShapeVTS"
   },
   "bugs": {
-    "url": "https://github.com/Convicted202/PixelShape/issues"
+    "url": "https://github.com/Renpona/PixelShapeVTS/issues"
   },
-  "homepage": "https://github.com/Convicted202/PixelShape#readme",
+  "homepage": "https://github.com/Renpona/PixelShapeVTS#readme",
   "keywords": [
     "pixel",
     "artwork",
@@ -32,7 +32,7 @@
     "online",
     "8bit"
   ],
-  "author": "Alexander Yanovych",
+  "author": "Renpona",
   "license": "MIT",
   "devDependencies": {
     "@eleks/eslint-config-eleks": "^0.1.1",
