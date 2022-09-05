@@ -13,6 +13,8 @@ const middleware = [
   thunk
 ];
 
+var ENV = 'develop';
+
 if (ENV === 'develop') middleware.push(logger);
 
 const createStoreWithMiddleware = applyMiddleware(
