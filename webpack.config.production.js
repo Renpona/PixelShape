@@ -1,9 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-
-const ExtractStyl = new ExtractTextPlugin('[name].css');
 
 const config = {
   entry: [
@@ -15,66 +12,82 @@ const config = {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js'
   },
+  stats: {
+    errorDetails: true
+  },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.styl$/,
-        loader: ExtractStyl.extract(['css', 'stylus'])
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader'
+          },
+          {
+            loader: 'stylus-loader'
+          }
+        ]
       },
       {
         test: /\.js$/,
-        loaders: ['babel'],
-        exclude: /node_modules/
+        exclude: /(node_modules|bower_components)/,
+        use: [
+          {
+            loader: 'babel-loader'
+          }
+        ]
       },
       {
         test: /\.png$/,
-        loader: 'file',
-        query: {
-          name: 'images/[name].[ext]'
-        }
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'images/[name].[ext]'
+            }
+          }
+        ]
       },
       {
         test: /\.woff/,
-        loader: 'url',
-        query: {
-          limit: 10000,
-          name: 'fonts/[name].[ext]',
-          mimetype: 'application/font-woff'
-        }
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 10000,
+              name: 'fonts/[name].[ext]',
+              mimetype: 'application/font-woff'
+            }
+          }
+        ]
+      },
+      {
+        test: /\.worker\.js$/,
+        use: [
+          {
+            loader: 'worker-loader',
+            options: {
+              filename: "generateGif.worker.js",
+              chunkFilename: "[id].generateGif.worker.js"
+            }
+          }
+        ]
       }
     ]
   },
   plugins: [
-    ExtractStyl,
     new webpack.ProvidePlugin({
-      Promise: 'imports?this=>global!exports?global.Promise!es6-promise/auto'
+      Promise: 'imports-loader?this=>global!exports-loader?global.Promise!es6-promise/auto'
     }),
     new HtmlWebpackPlugin({
       title: 'PixelEdit',
       template: 'src/index.html',
       inject: 'body'
     }),
-    new webpack.DefinePlugin({
-      'ENV': JSON.stringify('production'),
-      'process.env': {
-        'NODE_ENV': JSON.stringify('production')
-      }
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      },
-      output: {
-        comments: false
-      }
-    })
-  ],
-  worker: {
-    output: {
-      filename: "generateGif.worker.js",
-      chunkFilename: "[id].generateGif.worker.js"
-    }
-  }
+  ]
 };
 
 module.exports = config;

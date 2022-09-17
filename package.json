@@ -8,7 +8,7 @@
     "prestart": "npm run clean",
     "start": "webpack-dev-server",
     "prebuild": "npm run clean",
-    "build": "cross-env NODE_ENV=production webpack -p",
+    "build": "cross-env NODE_ENV=production webpack",
     "lint": "eslint ./src",
     "test-runner": "babel-node node_modules/blue-tape/bin/blue-tape -r ./test/requireHook.js test/**/*.spec.js",
     "pretest": "npm run lint",
@@ -83,7 +83,7 @@
     "tiny-worker": "^2.0.3",
     "url-loader": "^3.0.0",
     "w3c-blob": "0.0.1",
-    "webpack": "^4.42.1",
+    "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.10.1",
     "worker-loader": "^3.0.2"
@@ -109,21 +109,26 @@
     "forge": {
       "packagerConfig": {},
       "plugins": [
-        ["@electron-forge/plugin-webpack", {
-          "mainConfig": {
-            "entry": {
-              "index": "./webpack.config.electron.js"
+        [
+          "@electron-forge/plugin-webpack",
+          {
+            "mainConfig": {
+              "entry": {
+                "index": "./webpack.config.electron.js"
+              }
+            },
+            "renderer": {
+              "config": "./webpack.config.dev.js",
+              "entryPoints": [
+                {
+                  "name": "main_window",
+                  "html": "./src/index.html",
+                  "js": "./src/index.js"
+                }
+              ]
             }
-          },
-          "renderer": {
-            "config": "./webpack.config.dev.js",
-            "entryPoints": [{
-              "name": "main_window",
-              "html": "./src/index.html",
-              "js": "./src/index.js"
-            }]
           }
-        }]
+        ]
       ],
       "makers": [
         {
