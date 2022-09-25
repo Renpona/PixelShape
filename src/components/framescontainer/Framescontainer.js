@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import Frame from '../frame/Frame';
 
 import WorkerPool from '../../workers/workerPool';
-const Worker = require('worker!../../workers/generateGif.worker.js');
+import Worker from "../../workers/generateGif.worker.js";
 
 class FramesContainer extends Component {
   constructor (...args) {

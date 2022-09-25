@@ -10,7 +10,9 @@ const About = () => (
       </strong>
       v0.0.1
     </div>
-    <div>Created by <strong>Alexander Yanovych</strong></div>
+    <div>Forked by <strong>Renpona</strong></div>
+    <div><strong>https://renpona.neocities.com</strong></div>
+    <div>Original by <strong>Alexander Yanovych</strong></div>
     <div><strong>alexander.yanovych@gmail.com</strong></div>
   </div>
 );

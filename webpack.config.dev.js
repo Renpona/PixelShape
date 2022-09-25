@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const config = {
+  mode: 'development',
   entry: [
     '@babel/polyfill',
     './src/polyfills/index.js',
@@ -15,10 +16,9 @@ const config = {
   devServer: {
     historyApiFallback: true,
     hot: true,
-    inline: true,
     port: 9090,
     open: true,
-    contentBase: './src'
+    static: './src'
     // quiet: true
     //stats: 'errors-only',
   },
@@ -29,40 +29,73 @@ const config = {
     poll: 1000
   },
   cache: true,
-  debug: true,
   devtool: 'eval-source-map',
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.styl$/,
-        loaders: ['style', 'css', 'stylus'],
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader'
+          },
+          {
+            loader: 'stylus-loader'
+          }
+        ]
       },
       {
         test: /\.js$/,
-        loaders: ['babel'],
-        include: path.join(__dirname, 'src')
+        exclude: /(node_modules|bower_components)/,
+        use: [
+          {
+            loader: 'babel-loader'
+          }
+        ]
       },
       {
         test: /\.png$/,
-        loader: 'file',
-        query: {
-          name: 'images/[name].[ext]'
-        }
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'images/[name].[ext]'
+            }
+          }
+        ]
       },
       {
         test: /\.woff/,
-        loader: 'url',
-        query: {
-          limit: 10000,
-          name: 'fonts/[name].[ext]',
-          mimetype: 'application/font-woff'
-        }
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 10000,
+              name: 'fonts/[name].[ext]',
+              mimetype: 'application/font-woff'
+            }
+          }
+        ]
+      },
+      {
+        test: /\.worker\.js$/,
+        use: [
+          {
+            loader: 'worker-loader',
+            options: {
+              filename: "generateGif.worker.js",
+              chunkFilename: "[id].generateGif.worker.js"
+            }
+          }
+        ]
       }
     ]
   },
   plugins: [
     new webpack.ProvidePlugin({
-      Promise: 'imports?this=>global!exports?global.Promise!es6-promise/auto'
+      Promise: 'imports-loader?this=>global!exports-loader?global.Promise!es6-promise/auto'
     }),
     new HtmlWebpackPlugin({
       title: 'PixelEdit',
@@ -70,27 +103,10 @@ const config = {
       inject: 'body',
       cache: true
     }),
-    new webpack.DefinePlugin({
-      'ENV': JSON.stringify('develop')
-    }),
     new webpack.HotModuleReplacementPlugin({
       multiStep: true
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      },
-      output: {
-        comments: false
-      }
     })
-  ],
-  worker: {
-    output: {
-      filename: "generateGif.worker.js",
-      chunkFilename: "[id].generateGif.worker.js"
-    }
-  }
+  ]
 };
 
 module.exports = config;
