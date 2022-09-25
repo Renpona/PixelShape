@@ -1,6 +1,7 @@
 # deps + build
 node_modules
 dist
+out
 
 # coverage info
 .nyc_output
