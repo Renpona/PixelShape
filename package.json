@@ -2,13 +2,13 @@
   "name": "pixelshapevts",
   "version": "0.0.2",
   "description": "Pixel editor that comes in handy when creating pixel art images and animations",
-  "main": "./electron/renderer.js",
+  "main": "./renderer.js",
   "scripts": {
     "clean": "rimraf ./dist",
     "prestart": "npm run clean",
     "start": "electron-forge start",
     "prebuild": "npm run clean",
-    "build": "cross-env NODE_ENV=production webpack -p",
+    "build": "cross-env NODE_ENV=dev webpack",
     "lint": "eslint ./src",
     "test-runner": "babel-node node_modules/blue-tape/bin/blue-tape -r ./test/requireHook.js test/**/*.spec.js",
     "pretest": "npm run lint",
@@ -17,6 +17,7 @@
     "coverage": "cross-env NODE_ENV=test nyc tape -r ./test/requireHook.js -- test/**/*.spec.js | tap-spec",
     "postcoverage": "nyc report --reporter=html",
     "package": "electron-forge package",
+    "premake": "rimraf ./out",
     "make": "electron-forge make"
   },
   "repository": {
@@ -105,7 +106,9 @@
   },
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "asar": true
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
