@@ -117,7 +117,8 @@ class NewProjectModal extends Component {
             <input
               id="project-import"
               type="file"
-              accept={[projectExtension, '.gif'].join()}
+              //accept={[projectExtension, '.gif'].join()}
+              accept={[projectExtension].join()}
               ref={input => this._input = input}
               style={{ display: 'none' }}
               onChange={this.handleUpload.bind(this)} />
@@ -134,7 +135,7 @@ class NewProjectModal extends Component {
           </div>
         </div>
 
-        <div className="newproject-import__warning">You are allowed to load only files of <strong>.gif</strong> and <strong>.pxlsh</strong> formats</div>
+        <div className="newproject-import__warning">You are allowed to load only files of <strong>.pxlsh</strong> format</div>
       </ModalWindow>
     );
   }
