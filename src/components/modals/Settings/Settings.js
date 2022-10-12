@@ -58,16 +58,17 @@ class SettingsModal extends Component {
     this._heightInput.value = this.props.imageSize.height;
   }
 
+  //TODO: If canvas size changing ever comes back, uncomment the lines in confirm() and cancel()
   confirm () {
-    this.resetErrors();
-    if (this.checkErrors()) return;
-    this.props.setImageSize(this._widthInput.value, this._heightInput.value, this.props.stretchOn);
+    //this.resetErrors();
+    //if (this.checkErrors()) return;
+    //this.props.setImageSize(this._widthInput.value, this._heightInput.value, this.props.stretchOn);
     this.props.closeModal();
   }
 
   cancel () {
-    this.setActualInputValues();
-    this.resetErrors();
+    //this.setActualInputValues();
+    //this.resetErrors();
     this.props.closeModal();
   }
 
@@ -99,10 +100,11 @@ class SettingsModal extends Component {
     return (
       <ModalWindow
         title="Settings"
-        ok={{ text: 'Save', action: this.confirm.bind(this) }}
-        cancel={{ text: 'Cancel', action: this.cancel.bind(this) }}
+        ok={{ text: null, action: this.confirm.bind(this) }}
+        cancel={{ text: 'Close', action: this.cancel.bind(this) }}
         isShown={this.props.isShown}>
 
+      {/*
         <div className="settings__dimensions">
           <div className="settings__dimensions-edit">
             <div className="settings__dimensions-inputs">
@@ -128,6 +130,7 @@ class SettingsModal extends Component {
             </ToggleCheckbox>
           </div>
         </div>
+    */}
         <ToggleCheckbox
           value={this.props.gridShown}
           onChange={this.props.toggleGrid.bind(this)}>

@@ -84,6 +84,7 @@ class DownloadProjectModal extends Component {
         cancel={{ text: 'Cancel', action: this.cancel.bind(this) }}
         isShown={this.props.isShown}>
 
+      {/*
         <ToggleCheckbox
           value={this.props.includeGif}
           onChange={this.props.toggleIncludeGif.bind(this)}>
@@ -94,6 +95,7 @@ class DownloadProjectModal extends Component {
           onChange={this.props.toggleIncludeSpritesheet.bind(this)}>
           Include spritesheet
         </ToggleCheckbox>
+    */}
         <ToggleCheckbox
           value={this.props.includePalette}
           onChange={this.props.toggleIncludePalette.bind(this)}>
@@ -102,7 +104,7 @@ class DownloadProjectModal extends Component {
         <ToggleCheckbox
           value={this.props.includeProject}
           onChange={this.props.toggleIncludeProject.bind(this)}>
-          Include project
+          Include image
         </ToggleCheckbox>
       </ModalWindow>
     );
