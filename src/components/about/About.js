@@ -8,7 +8,7 @@ const About = () => (
       <strong className="about-section-appname">
         <a href="https://github.com/Renpona/VTSLiveDraw">VTSLiveDraw</a>
       </strong>
-      v1.0
+      v1.0-beta
     </div>
   </div>
 );

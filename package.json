@@ -1,6 +1,6 @@
 {
-  "name": "pixelshapevts",
-  "version": "0.0.2",
+  "name": "vtsLiveDraw",
+  "version": "1.0-beta",
   "description": "Pixel editor that comes in handy when creating pixel art images and animations",
   "main": "./renderer.js",
   "scripts": {
@@ -115,7 +115,7 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "pixelshapevts"
+            "name": "vtsLivedraw"
           }
         },
         {
