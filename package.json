@@ -18,7 +18,9 @@
     "postcoverage": "nyc report --reporter=html",
     "package": "electron-forge package",
     "premake": "rimraf ./out",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "prepublish": "npm run build",
+    "publish": "npm run make"
   },
   "repository": {
     "type": "git",
