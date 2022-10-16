@@ -17,6 +17,13 @@ const createWindow = () => {
   mainWindow.loadFile('dist/index.html')
 
   // Open the DevTools.
+  mainWindow.webContents.on('before-input-event', (event, input) => {
+    if (input.key.toLowerCase() === 'f12') {
+      mainWindow.webContents.openDevTools()
+      console.log('Pressed F12')
+      event.preventDefault()
+    }
+  })
   // mainWindow.webContents.openDevTools()
 }
 
