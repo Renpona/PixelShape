@@ -1,6 +1,6 @@
 {
   "name": "vtsLiveDraw",
-  "version": "1.0-beta",
+  "version": "0.9.9",
   "description": "Pixel editor that comes in handy when creating pixel art images and animations",
   "main": "./renderer.js",
   "scripts": {
